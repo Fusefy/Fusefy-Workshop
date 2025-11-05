@@ -49,6 +49,12 @@ mypy
 # Documentation generation for tests
 pytest-html
 
+# Data validation and analysis
+pandas
+numpy
+scipy
+jsonschema
+
 # Mock external services
 responses
 moto

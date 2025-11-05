@@ -3,24 +3,24 @@
     "name": "Claims-Processing-Agent-Core",
     "version": "v2.1.0",
     "status": "production",
-    "lastUpdated": "2025-11-05T15:31:30.361144",
+    "lastUpdated": "2025-11-05T21:03:03.826102",
     "approvedBy": "Dr. Sarah Chen",
     "approvedDate": "2025-11-05"
   },
   "metrics": {
-    "Claims Processing Straight-Through Rate": 88.1,
+    "Claims Processing Straight-Through Rate": 89.8,
     "Claims Processing Straight-Through Rate_explanation": "Percentage of claims processed automatically without requiring manual intervention or review.",
     "Error Rate on Approved Claims": 4.5,
     "Error Rate on Approved Claims_explanation": "Proportion of processing errors found in claims that were approved, indicating quality control effectiveness.",
-    "Time to Adjudication Reduction": 49.2,
+    "Time to Adjudication Reduction": 48.7,
     "Time to Adjudication Reduction_explanation": "Percentage improvement in claim adjudication speed compared to manual processing baseline.",
-    "Claim Denial Rate": 13.7,
+    "Claim Denial Rate": 11.5,
     "Claim Denial Rate_explanation": "Proportion of claims denied by the system, reflecting accuracy in policy validation and fraud detection.",
     "Compliance Dashboard Accuracy": 97.6,
     "Compliance Dashboard Accuracy_explanation": "Accuracy of compliance reporting dashboards in correctly reflecting processed claims data and regulatory status.",
-    "Integration Accuracy": 98.9,
+    "Integration Accuracy": 98.2,
     "Integration Accuracy_explanation": "Correctness of data synchronization and integration with existing insurance management systems.",
-    "Processing Latency": 9.0,
+    "Processing Latency": 8.0,
     "Processing Latency_explanation": "Average time in seconds required to process a claim from intake to decision."
   },
   "datasets": [
@@ -29,8 +29,8 @@
       "name": "Production Claims Processing Dataset",
       "type": "End-to-End Processing",
       "size": "25,000 claim records",
-      "accuracy": 93.8,
-      "bias_score": 0.024,
+      "accuracy": 94.5,
+      "bias_score": 0.022,
       "status": "validated"
     },
     {
@@ -38,8 +38,8 @@
       "name": "System Integration Test Set",
       "type": "API & Data Flow",
       "size": "5,000 integration tests",
-      "accuracy": 95.4,
-      "bias_score": 0.01,
+      "accuracy": 97.7,
+      "bias_score": 0.014,
       "status": "validated"
     },
     {
@@ -47,8 +47,8 @@
       "name": "Regulatory Compliance Validation",
       "type": "Compliance & Audit",
       "size": "10,000 compliance checks",
-      "accuracy": 94.3,
-      "bias_score": 0.016,
+      "accuracy": 95.5,
+      "bias_score": 0.018,
       "status": "validated"
     },
     {
@@ -56,8 +56,8 @@
       "name": "Performance Benchmark Dataset",
       "type": "Performance Testing",
       "size": "15,000 processing cycles",
-      "accuracy": 92.1,
-      "bias_score": 0.028,
+      "accuracy": 91.0,
+      "bias_score": 0.025,
       "status": "in_testing"
     }
   ],
@@ -111,30 +111,30 @@
     ]
   },
   "cspm": {
-    "overallScore": 93.5,
+    "overallScore": 93.9,
     "policies": [
       {
         "name": "Claims Data Encryption",
         "status": "compliant",
-        "score": 95.0,
+        "score": 98.0,
         "issues": 0
       },
       {
         "name": "Processing Access Control",
         "status": "compliant",
-        "score": 91.0,
+        "score": 95.0,
         "issues": 0
       },
       {
         "name": "Integration Security",
         "status": "compliant",
-        "score": 91.0,
+        "score": 93.0,
         "issues": 0
       },
       {
         "name": "Compliance Audit Trail",
         "status": "compliant",
-        "score": 95.0,
+        "score": 93.0,
         "issues": 0
       }
     ]
@@ -165,15 +165,15 @@
       {
         "type": "Processing Manipulation",
         "severity": "low",
-        "count": 3,
-        "blocked": 3,
+        "count": 2,
+        "blocked": 2,
         "date": "2025-11-03"
       },
       {
         "type": "Data Access Violation",
         "severity": "medium",
-        "count": 2,
-        "blocked": 2,
+        "count": 1,
+        "blocked": 1,
         "date": "2025-11-04"
       }
     ]
@@ -237,42 +237,42 @@
     "metricsOverTime": [
       {
         "date": "2025-09-30",
-        "Claims Processing Straight-Through Rate": 85.4,
-        "Error Rate on Approved Claims": 4.1,
-        "Time to Adjudication Reduction": 46.7,
-        "Claim Denial Rate": 15.4,
-        "Compliance Dashboard Accuracy": 92.0,
-        "Integration Accuracy": 95.3,
-        "Processing Latency": 448.0,
-        "recoveryRate": 85.5,
+        "Claims Processing Straight-Through Rate": 85.3,
+        "Error Rate on Approved Claims": 4.0,
+        "Time to Adjudication Reduction": 45.6,
+        "Claim Denial Rate": 15.6,
+        "Compliance Dashboard Accuracy": 92.4,
+        "Integration Accuracy": 94.5,
+        "Processing Latency": 461.0,
+        "recoveryRate": 85.8,
         "errorRate": 5.4,
-        "averageSteps": 8.5
+        "averageSteps": 8.7
       },
       {
         "date": "2025-10-15",
-        "Claims Processing Straight-Through Rate": 89.6,
-        "Error Rate on Approved Claims": 3.4,
-        "Time to Adjudication Reduction": 53.9,
-        "Claim Denial Rate": 12.4,
-        "Compliance Dashboard Accuracy": 94.6,
-        "Integration Accuracy": 97.0,
-        "Processing Latency": 364.0,
-        "recoveryRate": 89.4,
-        "errorRate": 4.0,
-        "averageSteps": 8.1
+        "Claims Processing Straight-Through Rate": 89.8,
+        "Error Rate on Approved Claims": 3.6,
+        "Time to Adjudication Reduction": 53.1,
+        "Claim Denial Rate": 13.9,
+        "Compliance Dashboard Accuracy": 94.9,
+        "Integration Accuracy": 96.9,
+        "Processing Latency": 378.0,
+        "recoveryRate": 90.8,
+        "errorRate": 3.9,
+        "averageSteps": 7.8
       },
       {
         "date": "2025-11-05",
-        "Claims Processing Straight-Through Rate": 93.7,
-        "Error Rate on Approved Claims": 2.6,
-        "Time to Adjudication Reduction": 61.4,
+        "Claims Processing Straight-Through Rate": 93.2,
+        "Error Rate on Approved Claims": 2.5,
+        "Time to Adjudication Reduction": 62.5,
         "Claim Denial Rate": 10.4,
-        "Compliance Dashboard Accuracy": 97.8,
-        "Integration Accuracy": 98.6,
-        "Processing Latency": 287.0,
-        "recoveryRate": 93.2,
-        "errorRate": 2.5,
-        "averageSteps": 7.4
+        "Compliance Dashboard Accuracy": 97.7,
+        "Integration Accuracy": 98.3,
+        "Processing Latency": 306.0,
+        "recoveryRate": 94.0,
+        "errorRate": 2.4,
+        "averageSteps": 7.5
       }
     ],
     "vulnerabilityTrends": [

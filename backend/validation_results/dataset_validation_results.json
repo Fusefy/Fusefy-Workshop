@@ -1,0 +1,53 @@
+{
+  "validation_info": {
+    "dataset_name": "Golden Dataset - Claims Processing",
+    "version": "v1.0.0",
+    "validation_date": "2025-11-05T21:02:52.679180",
+    "overall_status": "PASS"
+  },
+  "schema_validation": {
+    "status": "PASS",
+    "issues_count": 0,
+    "issues": [],
+    "coverage": 100.0
+  },
+  "data_quality": {
+    "status": "PASS",
+    "issues_count": 0,
+    "issues": [],
+    "quality_score": 100.0
+  },
+  "pii_masking": {
+    "status": "PASS",
+    "masking_rate": 100.0,
+    "issues_count": 0,
+    "issues": []
+  },
+  "token_mapping": {
+    "status": "PASS",
+    "unique_tokens": 8,
+    "issues_count": 0,
+    "issues": []
+  },
+  "anomaly_detection": {
+    "status": "PASS",
+    "anomalies_count": 0,
+    "anomalies": [],
+    "amount_range": "$150.00 - $1,200.00"
+  },
+  "statistics": {
+    "total_records": 2,
+    "avg_amount": 462.5,
+    "avg_confidence": 93.5,
+    "document_types": {
+      "Medical Invoice": 2
+    },
+    "total_invoice_lines": 4
+  },
+  "summary": {
+    "total_checks": 5,
+    "passed_checks": 5,
+    "failed_checks": 0,
+    "warning_checks": 0
+  }
+}
