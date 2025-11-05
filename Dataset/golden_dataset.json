@@ -1,0 +1,152 @@
+[
+  {
+    "claim_document_id": "CD123456789",
+    "raw_claim_record": {
+      "patient_details": {
+        "patient_id": "P123456",
+        "name": "Jane Doe",
+        "date_of_birth": "1985-07-12"
+      },
+      "policy_number": "POLICY78910",
+      "invoice_lines": [
+        {
+          "service_description": "MRI Scan",
+          "service_date": "2023-11-20",
+          "amount_claimed": 1200
+        },
+        {
+          "service_description": "Blood Test",
+          "service_date": "2023-11-21",
+          "amount_claimed": 200
+        }
+      ],
+      "claim_dates": {
+        "service_provided": "2023-11-20",
+        "claim_submitted": "2023-12-01"
+      },
+      "document_type": "Medical Invoice",
+      "confidence_scores": {
+        "overall": 95,
+        "fields": {
+          "patient_details": 98,
+          "policy_number": 97,
+          "invoice_lines": 93
+        }
+      },
+      "audit_metadata": {
+        "timestamp": "2023-12-01T09:00:00Z",
+        "processor_id": "OCR-Service-1"
+      }
+    },
+    "masked_claim_record": {
+      "patient_details": {
+        "patient_id": "P123456",
+        "name": "Confidential",
+        "date_of_birth": "Confidential"
+      },
+      "policy_number": "Confidential",
+      "invoice_lines": [
+        {
+          "service_description": "Confidential",
+          "service_date": "2023-11-20",
+          "amount_claimed": 1200
+        },
+        {
+          "service_description": "Confidential",
+          "service_date": "2023-11-21",
+          "amount_claimed": 200
+        }
+      ],
+      "claim_dates": {
+        "service_provided": "2023-11-20",
+        "claim_submitted": "2023-12-01"
+      },
+      "document_type": "Medical Invoice",
+      "audit_metadata": {
+        "timestamp": "2023-12-01T09:00:00Z",
+        "processor_id": "PII-Mask-Service-1"
+      }
+    },
+    "token_mapping_table": {
+      "patient_name": "TKN1234567",
+      "date_of_birth": "TKN2345678",
+      "policy_number": "TKN3456789",
+      "service_description": "TKN4567890"
+    }
+  },
+  {
+    "claim_document_id": "CD987654321",
+    "raw_claim_record": {
+      "patient_details": {
+        "patient_id": "P654321",
+        "name": "John Smith",
+        "date_of_birth": "1990-05-16"
+      },
+      "policy_number": "POLICY12345",
+      "invoice_lines": [
+        {
+          "service_description": "Orthopedic Consultation",
+          "service_date": "2023-10-15",
+          "amount_claimed": 300
+        },
+        {
+          "service_description": "X-Ray",
+          "service_date": "2023-10-16",
+          "amount_claimed": 150
+        }
+      ],
+      "claim_dates": {
+        "service_provided": "2023-10-15",
+        "claim_submitted": "2023-10-30"
+      },
+      "document_type": "Medical Invoice",
+      "confidence_scores": {
+        "overall": 92,
+        "fields": {
+          "patient_details": 95,
+          "policy_number": 91,
+          "invoice_lines": 90
+        }
+      },
+      "audit_metadata": {
+        "timestamp": "2023-10-30T10:15:00Z",
+        "processor_id": "OCR-Service-2"
+      }
+    },
+    "masked_claim_record": {
+      "patient_details": {
+        "patient_id": "P654321",
+        "name": "Confidential",
+        "date_of_birth": "Confidential"
+      },
+      "policy_number": "Confidential",
+      "invoice_lines": [
+        {
+          "service_description": "Confidential",
+          "service_date": "2023-10-15",
+          "amount_claimed": 300
+        },
+        {
+          "service_description": "Confidential",
+          "service_date": "2023-10-16",
+          "amount_claimed": 150
+        }
+      ],
+      "claim_dates": {
+        "service_provided": "2023-10-15",
+        "claim_submitted": "2023-10-30"
+      },
+      "document_type": "Medical Invoice",
+      "audit_metadata": {
+        "timestamp": "2023-10-30T10:15:00Z",
+        "processor_id": "PII-Mask-Service-2"
+      }
+    },
+    "token_mapping_table": {
+      "patient_name": "TKN6543210",
+      "date_of_birth": "TKN7654321",
+      "policy_number": "TKN8765432",
+      "service_description": "TKN9876543"
+    }
+  }
+]
