@@ -36,6 +36,7 @@ class TestHealthAPI:
         assert data["status"] == "healthy"
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_health_check_async(self, async_client: AsyncClient):
         """
         Test health check with async client.

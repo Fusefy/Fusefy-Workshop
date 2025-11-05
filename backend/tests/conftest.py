@@ -48,7 +48,7 @@ def event_loop():
     loop.close()
 
 
-@pytest.fixture(scope="function")
+@pytest_asyncio.fixture(scope="function")
 async def test_db_engine():
     """
     Create a test database engine using in-memory SQLite.
@@ -81,7 +81,7 @@ async def test_db_engine():
     await engine.dispose()
 
 
-@pytest.fixture(scope="function")
+@pytest_asyncio.fixture(scope="function")
 async def test_db_session(test_db_engine) -> AsyncGenerator[AsyncSession, None]:
     """
     Create a test database session with automatic transaction rollback.
@@ -119,7 +119,7 @@ async def test_db_session(test_db_engine) -> AsyncGenerator[AsyncSession, None]:
             await transaction.rollback()
 
 
-@pytest.fixture(scope="function")
+@pytest_asyncio.fixture(scope="function")
 async def override_get_db(test_db_session: AsyncSession):
     """
     Override the database dependency for testing.
@@ -160,7 +160,7 @@ def test_client(override_get_db) -> Generator[TestClient, None, None]:
         yield client
 
 
-@pytest.fixture(scope="function")
+@pytest_asyncio.fixture(scope="function")
 async def async_client(override_get_db) -> AsyncGenerator[AsyncClient, None]:
     """
     Create an async HTTP client for asynchronous API testing.
@@ -259,7 +259,7 @@ def sample_claim_update() -> ClaimUpdate:
     )
 
 
-@pytest.fixture
+@pytest_asyncio.fixture
 async def sample_claim_in_db(test_db_session: AsyncSession, sample_claim_data) -> Claim:
     """
     Create a sample claim record in the test database.
@@ -286,7 +286,7 @@ async def sample_claim_in_db(test_db_session: AsyncSession, sample_claim_data) -
     return claim
 
 
-@pytest.fixture
+@pytest_asyncio.fixture
 async def multiple_claims_in_db(test_db_session: AsyncSession) -> list[Claim]:
     """
     Create multiple sample claims in the test database.

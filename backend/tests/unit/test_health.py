@@ -55,7 +55,8 @@ class TestHealthEndpoint:
         except ValueError:
             pytest.fail("Timestamp should be in valid ISO format")
 
-    @pytest.mark.unit 
+    @pytest.mark.unit
+    @pytest.mark.asyncio
     async def test_health_check_async_client(self, async_client: AsyncClient):
         """
         Test health check endpoint using async client.
@@ -117,6 +118,7 @@ class TestDetailedHealthEndpoint:
     """Test suite for the detailed health check endpoint."""
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_detailed_health_with_database_available(self, async_client: AsyncClient):
         """
         Test detailed health check when database is available.
@@ -225,6 +227,7 @@ class TestDetailedHealthEndpoint:
         assert api_service["status"] == "healthy", "API should still be healthy without database"
 
     @pytest.mark.unit
+    @pytest.mark.asyncio
     @patch('src.api.health.db_config')
     async def test_detailed_health_database_connection_error(self, mock_db_config, async_client: AsyncClient):
         """

@@ -440,7 +440,7 @@ class TestClaimResponseSchema:
     """Test suite for ClaimResponse schema validation."""
 
     @pytest.mark.unit
-    def test_claim_response_from_model(self, sample_claim_in_db):
+    def test_claim_response_from_model(self, sample_claim_data):
         """
         Test ClaimResponse creation from database model.
         
@@ -452,20 +452,35 @@ class TestClaimResponseSchema:
         - Timestamps are correctly formatted
         - Enum values are properly converted
         """
+        # Arrange: Create a mock Claim object with all required fields
+        from src.models.claim import Claim
+        import uuid
+        from datetime import datetime
+        
+        # Create claim data with all ClaimResponse required fields
+        claim_data = sample_claim_data.copy()
+        mock_claim = Claim(**claim_data)
+        # Set the additional fields that ClaimResponse expects
+        mock_claim.id = uuid.uuid4()
+        mock_claim.created_at = datetime.now()
+        mock_claim.updated_at = datetime.now()
+        mock_claim.ocr_processed_at = datetime.now()
+        mock_claim.requires_human_review = False
+        
         # Act: Create ClaimResponse from model
-        claim_response = ClaimResponse.model_validate(sample_claim_in_db)
+        claim_response = ClaimResponse.model_validate(mock_claim)
         
         # Assert: Verify all fields are properly mapped
-        assert claim_response.id == sample_claim_in_db.id, "ID should be mapped correctly"
-        assert claim_response.claim_number == sample_claim_in_db.claim_number, "Claim number should be mapped"
-        assert claim_response.patient_name == sample_claim_in_db.patient_name, "Patient name should be mapped"
-        assert claim_response.claim_amount == sample_claim_in_db.claim_amount, "Amount should be mapped"
-        assert claim_response.status == sample_claim_in_db.status, "Status should be mapped"
-        assert claim_response.created_at == sample_claim_in_db.created_at, "Created timestamp should be mapped"
-        assert claim_response.updated_at == sample_claim_in_db.updated_at, "Updated timestamp should be mapped"
+        assert claim_response.id == mock_claim.id, "ID should be mapped correctly"
+        assert claim_response.claim_number == mock_claim.claim_number, "Claim number should be mapped"
+        assert claim_response.patient_name == mock_claim.patient_name, "Patient name should be mapped"
+        assert claim_response.claim_amount == mock_claim.claim_amount, "Amount should be mapped"
+        assert claim_response.status == mock_claim.status, "Status should be mapped"
+        assert claim_response.created_at == mock_claim.created_at, "Created timestamp should be mapped"
+        assert claim_response.updated_at == mock_claim.updated_at, "Updated timestamp should be mapped"
 
     @pytest.mark.unit
-    def test_claim_response_serialization(self, sample_claim_in_db):
+    def test_claim_response_serialization(self, sample_claim_data):
         """
         Test ClaimResponse JSON serialization.
         
@@ -478,12 +493,27 @@ class TestClaimResponseSchema:
         - Datetimes serialize to ISO format strings
         - Enums serialize to their string values
         """
+        # Arrange: Create a mock Claim object with all required fields
+        from src.models.claim import Claim
+        import uuid
+        from datetime import datetime
+        
+        # Create claim data with all ClaimResponse required fields
+        claim_data = sample_claim_data.copy()
+        mock_claim = Claim(**claim_data)
+        # Set the additional fields that ClaimResponse expects
+        mock_claim.id = uuid.uuid4()
+        mock_claim.created_at = datetime.now()
+        mock_claim.updated_at = datetime.now()
+        mock_claim.ocr_processed_at = datetime.now()
+        mock_claim.requires_human_review = False
+        
         # Act: Create and serialize ClaimResponse
-        claim_response = ClaimResponse.model_validate(sample_claim_in_db)
+        claim_response = ClaimResponse.model_validate(mock_claim)
         serialized = claim_response.model_dump()
         
-        # Assert: Verify serialization types
-        assert isinstance(serialized["id"], str), "UUID should serialize to string"
+        # Assert: Verify serialization types (default mode preserves types)
+        assert isinstance(serialized["id"], uuid.UUID), "UUID should preserve type in default mode"
         assert isinstance(serialized["created_at"], datetime), "Datetime should remain datetime"
         assert isinstance(serialized["updated_at"], datetime), "Datetime should remain datetime"
         assert isinstance(serialized["status"], ClaimStatus), "Enum should remain enum type"
@@ -697,7 +727,7 @@ class TestSchemaInteroperability:
         assert "status" in model_data, "Should include status for model"
 
     @pytest.mark.unit
-    def test_model_to_response_conversion(self, sample_claim_in_db):
+    def test_model_to_response_conversion(self, sample_claim_data):
         """
         Test conversion from Claim model to ClaimResponse schema.
         
@@ -709,8 +739,23 @@ class TestSchemaInteroperability:
         - Additional response fields are properly included
         - Type conversions work correctly
         """
+        # Arrange: Create a mock Claim object with all required fields
+        from src.models.claim import Claim
+        import uuid
+        from datetime import datetime
+        
+        # Create claim data with all ClaimResponse required fields
+        claim_data = sample_claim_data.copy()
+        mock_claim = Claim(**claim_data)
+        # Set the additional fields that ClaimResponse expects
+        mock_claim.id = uuid.uuid4()
+        mock_claim.created_at = datetime.now()
+        mock_claim.updated_at = datetime.now()
+        mock_claim.ocr_processed_at = datetime.now()
+        mock_claim.requires_human_review = False
+        
         # Act: Convert model to response schema
-        claim_response = ClaimResponse.model_validate(sample_claim_in_db)
+        claim_response = ClaimResponse.model_validate(mock_claim)
         
         # Assert: Verify conversion completeness
         assert hasattr(claim_response, "id"), "Response should include ID"
@@ -718,8 +763,8 @@ class TestSchemaInteroperability:
         assert hasattr(claim_response, "updated_at"), "Response should include timestamps"
         
         # Verify data integrity
-        assert claim_response.claim_number == sample_claim_in_db.claim_number, "Data should be preserved"
-        assert claim_response.status == sample_claim_in_db.status, "Enum should be preserved"
+        assert claim_response.claim_number == mock_claim.claim_number, "Data should be preserved"
+        assert claim_response.status == mock_claim.status, "Enum should be preserved"
 
     @pytest.mark.unit
     def test_update_schema_field_exclusion(self):

@@ -22,6 +22,7 @@ class TestCreateClaim:
     """Test suite for POST /api/v1/claims endpoint."""
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_create_claim_success(self, async_client: AsyncClient, sample_claim_data: Dict[str, Any]):
         """
         Test successful claim creation with valid data.
@@ -208,6 +209,7 @@ class TestListClaims:
     """Test suite for GET /api/v1/claims endpoint (with pagination)."""
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_list_claims_empty_database(self, async_client: AsyncClient):
         """
         Test listing claims when database is empty.
@@ -244,6 +246,7 @@ class TestListClaims:
         assert data["pages"] == 0, "Total pages should be 0 for empty results"
 
     @pytest.mark.integration 
+    @pytest.mark.asyncio
     async def test_list_claims_with_data(self, async_client: AsyncClient, multiple_claims_in_db):
         """
         Test listing claims when database contains data.
@@ -283,6 +286,7 @@ class TestListClaims:
             assert first_created >= second_created, "Claims should be ordered by creation date (newest first)"
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_list_claims_pagination(self, async_client: AsyncClient, multiple_claims_in_db):
         """
         Test pagination functionality for claims listing.
@@ -322,6 +326,7 @@ class TestListClaims:
         assert page1_ids.isdisjoint(page2_ids), "Pages should not contain overlapping claims"
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_list_claims_pagination_edge_cases(self, async_client: AsyncClient, multiple_claims_in_db):
         """
         Test edge cases for pagination parameters.
@@ -357,6 +362,7 @@ class TestGetClaimById:
     """Test suite for GET /api/v1/claims/{claim_id} endpoint."""
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_get_claim_success(self, async_client: AsyncClient, sample_claim_in_db: Claim):
         """
         Test successful retrieval of claim by ID.
@@ -393,6 +399,7 @@ class TestGetClaimById:
             assert data["claim_metadata"] == sample_claim_in_db.claim_metadata, "Metadata should match"
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_get_claim_not_found(self, async_client: AsyncClient):
         """
         Test retrieval of non-existent claim.
@@ -420,6 +427,7 @@ class TestGetClaimById:
         assert str(non_existent_id) in error_data["detail"], "Error should include requested ID"
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_get_claim_invalid_uuid(self, async_client: AsyncClient):
         """
         Test retrieval with invalid UUID format.
@@ -448,6 +456,7 @@ class TestUpdateClaim:
     """Test suite for PATCH /api/v1/claims/{claim_id} endpoint."""
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_update_claim_success(self, async_client: AsyncClient, sample_claim_in_db: Claim, sample_claim_update: ClaimUpdate):
         """
         Test successful partial update of claim.
@@ -492,6 +501,7 @@ class TestUpdateClaim:
         assert new_updated_at > original_updated_at, "updated_at should be refreshed"
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_update_claim_not_found(self, async_client: AsyncClient, sample_claim_update: ClaimUpdate):
         """
         Test update of non-existent claim.
@@ -520,6 +530,7 @@ class TestUpdateClaim:
         assert "not found" in error_data["detail"].lower(), "Error should indicate claim not found"
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_update_claim_validation_error(self, async_client: AsyncClient, sample_claim_in_db: Claim):
         """
         Test update with invalid data.
@@ -551,6 +562,7 @@ class TestUpdateClaim:
         assert "detail" in error_data, "Validation error should contain detail"
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_update_claim_empty_patch(self, async_client: AsyncClient, sample_claim_in_db: Claim):
         """
         Test update with no fields to update.
@@ -585,6 +597,7 @@ class TestGetClaimsByStatus:
     """Test suite for GET /api/v1/claims/status/{status} endpoint."""
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_filter_claims_by_status_success(self, async_client: AsyncClient, multiple_claims_in_db):
         """
         Test successful filtering of claims by status.
@@ -619,6 +632,7 @@ class TestGetClaimsByStatus:
             assert required_fields.issubset(set(claim.keys())), "Each claim should have required fields"
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_filter_claims_by_status_empty_results(self, async_client: AsyncClient):
         """
         Test filtering by status with no matching claims.
@@ -644,6 +658,7 @@ class TestGetClaimsByStatus:
         assert claims == [], "Should return empty array for no matching claims"
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_filter_claims_invalid_status(self, async_client: AsyncClient):
         """
         Test filtering with invalid status value.
@@ -668,6 +683,7 @@ class TestGetClaimsByStatus:
         assert "detail" in error_data, "Validation error should contain detail"
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_filter_claims_status_ordering(self, async_client: AsyncClient, multiple_claims_in_db):
         """
         Test that filtered claims are properly ordered.
@@ -697,6 +713,7 @@ class TestClaimsErrorHandling:
     """Test suite for error handling across all claims endpoints."""
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_database_unavailable_error(self, async_client: AsyncClient):
         """
         Test API behavior when database is unavailable.

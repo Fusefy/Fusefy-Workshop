@@ -24,6 +24,7 @@ class TestOCRAgentAPI:
     """Test suite for OCR Agent API endpoints."""
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_process_document_success(
         self,
         async_client: AsyncClient,
@@ -87,6 +88,7 @@ class TestOCRAgentAPI:
             assert "John Doe" in data["extracted_data"]["patient_name"]
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_process_document_low_confidence(
         self,
         async_client: AsyncClient,
@@ -143,6 +145,7 @@ class TestOCRAgentAPI:
             assert data["requires_human_review"] is True
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_process_document_invalid_claim(
         self,
         async_client: AsyncClient,
@@ -162,6 +165,7 @@ class TestOCRAgentAPI:
         assert "not found" in response.json()["detail"].lower()
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_process_document_invalid_file_format(
         self,
         async_client: AsyncClient,
@@ -181,6 +185,7 @@ class TestOCRAgentAPI:
         assert "Unsupported file format" in response.json()["detail"]
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_get_ocr_status_success(
         self,
         async_client: AsyncClient,
@@ -210,6 +215,7 @@ class TestOCRAgentAPI:
         assert "John Doe" in data["extracted_data"]["patient_name"]
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_get_ocr_status_not_processed(
         self,
         async_client: AsyncClient,
@@ -229,6 +235,7 @@ class TestOCRAgentAPI:
         assert data["confidence_score"] is None
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_list_claim_documents(
         self,
         async_client: AsyncClient,
@@ -260,6 +267,7 @@ class TestOCRAgentAPI:
             assert data["documents"][0]["filename"] == "doc1.pdf"
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_delete_claim_document(
         self,
         async_client: AsyncClient,
@@ -277,6 +285,7 @@ class TestOCRAgentAPI:
             mock_delete.assert_called_once_with(f"claims/{sample_claim_in_db.id}/test_doc.pdf")
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_reprocess_claim_success(
         self,
         async_client: AsyncClient,
@@ -320,6 +329,7 @@ class TestOCRAgentAPI:
             assert not data["requires_human_review"]
 
     @pytest.mark.integration
+    @pytest.mark.asyncio
     async def test_ocr_agent_processing_error(
         self,
         async_client: AsyncClient,
