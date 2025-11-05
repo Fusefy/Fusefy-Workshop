@@ -198,8 +198,8 @@ def sample_claim_data() -> Dict[str, Any]:
     return {
         "claim_number": fake.bothify(text="CLM-####-????").upper(),
         "patient_name": fake.name(),
-        "claim_amount": Decimal(fake.pydecimal(left_digits=4, right_digits=2, positive=True)),
-        "status": fake.random_element(elements=list(ClaimStatus)),
+        "claim_amount": float(fake.pydecimal(left_digits=4, right_digits=2, positive=True)),
+        "status": fake.random_element(elements=list(ClaimStatus)).value,
         "document_url": f"gs://claims-bucket/{fake.file_name(extension='pdf')}",
         "raw_data": {
             "ocr_confidence": fake.pyfloat(min_value=0.8, max_value=1.0),
@@ -250,7 +250,7 @@ def sample_claim_update() -> ClaimUpdate:
     """
     return ClaimUpdate(
         status=ClaimStatus.HUMAN_REVIEW,
-        claim_amount=Decimal("2500.75"),
+        claim_amount=2500.75,
         claim_metadata={
             "reviewer": fake.name(),
             "review_notes": fake.sentence(nb_words=10),
