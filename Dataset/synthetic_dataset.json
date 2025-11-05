@@ -1,0 +1,121 @@
+[
+  {
+    "raw_claim_record": {
+      "patient_details": {
+        "name": "John Doe",
+        "age": 45
+      },
+      "policy_number": "POL1234567",
+      "invoice_lines": [
+        {
+          "service": "X-ray",
+          "cost": 200
+        },
+        {
+          "service": "Blood Test",
+          "cost": ""
+        }
+      ],
+      "dates": {
+        "service_date": "2023-11-01",
+        "claim_submission_date": "2023-11-15"
+      },
+      "document_types": [
+        "medical report",
+        "billing statement"
+      ],
+      "confidence_scores": {
+        "overall": 85,
+        "details": {
+          "name": 90,
+          "age": 88
+        }
+      },
+      "audit_metadata": {
+        "processed_by": "OCR123",
+        "timestamp": "2023-11-16T10:00:00Z"
+      }
+    },
+    "masked_claim_record": {
+      "patient_details": {
+        "name": "J*** D**",
+        "age": ""
+      },
+      "policy_number": "P******567",
+      "invoice_lines": [
+        {
+          "service": "X-ray",
+          "cost": 200
+        }
+      ],
+      "dates": {
+        "service_date": "2023-11-01"
+      },
+      "document_types": [
+        "medical report"
+      ],
+      "confidence_scores": {
+        "overall": 85
+      }
+    },
+    "token_mapping_table": {
+      "patient_name_token": "abc1234"
+    }
+  },
+  {
+    "raw_claim_record": {
+      "patient_details": {
+        "name": "Emily Stone",
+        "age": 37,
+        "medical_history": "Asthma"
+      },
+      "policy_number": "",
+      "invoice_lines": [
+        {
+          "service": "Consultation",
+          "cost": 150
+        }
+      ],
+      "dates": {
+        "service_date": "2023-12-01",
+        "claim_submission_date": ""
+      },
+      "document_types": [
+        "billing statement"
+      ],
+      "confidence_scores": {
+        "overall": 80,
+        "details": {
+          "name": 92,
+          "age": 89
+        }
+      },
+      "audit_metadata": {
+        "processed_by": "OCR124",
+        "timestamp": "2023-12-02T15:00:00Z"
+      }
+    },
+    "masked_claim_record": {
+      "patient_details": {
+        "name": "E**** S****",
+        "age": 37
+      },
+      "policy_number": "",
+      "invoice_lines": [
+        {
+          "service": "Consultation",
+          "cost": 150
+        }
+      ],
+      "dates": {
+        "service_date": "2023-12-01"
+      },
+      "document_types": [
+        "billing statement"
+      ]
+    },
+    "token_mapping_table": {
+      "patient_name_token": "def5678"
+    }
+  }
+]
