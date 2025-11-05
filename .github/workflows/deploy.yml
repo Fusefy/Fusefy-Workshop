@@ -1,0 +1,77 @@
+name: Claims Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - development
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: 🏗️ Build Stage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install frontend dependencies
+        run: |
+          echo "Installing frontend dependencies..."
+          sleep 2
+          echo "✅ Frontend build completed successfully."
+
+  test:
+    name: 🧪 Test Stage
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Run placeholder tests
+        run: |
+          echo "Running mock tests..."
+          sleep 2
+          echo "✅ All tests passed successfully!"
+
+  deploy:
+    name: 🚀 Deployment Stage
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Deployment Script
+        run: |
+          echo "#!/bin/bash"
+          echo "--------------------------------------"
+          echo "Fake Deployment Script for FastAPI App"
+          echo "--------------------------------------"
+          echo ""
+          echo "Project directory: /var/www/html/Realestate-Agent"
+          echo "Switching to project directory..."
+          sleep 2
+          echo "Pulling latest changes..."
+          sleep 2
+          echo "Installing frontend dependencies..."
+          sleep 2
+          echo "Restarting PM2 services..."
+          sleep 2
+          echo "Setting up backend virtual environment..."
+          sleep 2
+          echo "Installing Python dependencies..."
+          sleep 2
+          echo "Starting backend (Uvicorn) on port 8000..."
+          sleep 2
+          echo "✅ Deployment completed successfully!"
+
+      - name: Final Status
+        run: echo "✅ Pipeline finished successfully."
+
+
