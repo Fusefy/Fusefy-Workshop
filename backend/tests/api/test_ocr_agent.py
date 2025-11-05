@@ -13,6 +13,7 @@ from io import BytesIO
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
+import pytest_asyncio
 from fastapi import UploadFile
 from httpx import AsyncClient
 from PIL import Image
@@ -23,12 +24,25 @@ from src.models.claim import Claim, ClaimStatus
 class TestOCRAgentAPI:
     """Test suite for OCR Agent API endpoints."""
 
+    @pytest_asyncio.fixture
+    async def ocr_ready_claim(self, test_db_session, sample_claim_data):
+        """Create a claim with status suitable for OCR processing."""
+        # Override status to ensure it's eligible for OCR processing
+        claim_data = sample_claim_data.copy()
+        claim_data["status"] = ClaimStatus.RECEIVED.value
+        
+        claim = Claim(**claim_data)
+        test_db_session.add(claim)
+        await test_db_session.commit()
+        await test_db_session.refresh(claim)
+        return claim
+
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_process_document_success(
         self,
         async_client: AsyncClient,
-        sample_claim_in_db: Claim,
+        ocr_ready_claim: Claim,
         mock_gcs_client: MagicMock,
     ):
         """
@@ -73,7 +87,7 @@ class TestOCRAgentAPI:
             
             # Make request
             response = await async_client.post(
-                f"/api/v1/agents/ocr/process/{sample_claim_in_db.id}",
+                f"/api/v1/agents/ocr/process/{ocr_ready_claim.id}",
                 files=files
             )
             
@@ -92,7 +106,7 @@ class TestOCRAgentAPI:
     async def test_process_document_low_confidence(
         self,
         async_client: AsyncClient,
-        sample_claim_in_db: Claim,
+        ocr_ready_claim: Claim,
     ):
         """Test document processing with low confidence requiring human review."""
         # Create a mock image file
@@ -131,7 +145,7 @@ class TestOCRAgentAPI:
             
             # Make request
             response = await async_client.post(
-                f"/api/v1/agents/ocr/process/{sample_claim_in_db.id}",
+                f"/api/v1/agents/ocr/process/{ocr_ready_claim.id}",
                 files=files
             )
             
@@ -169,7 +183,7 @@ class TestOCRAgentAPI:
     async def test_process_document_invalid_file_format(
         self,
         async_client: AsyncClient,
-        sample_claim_in_db: Claim,
+        ocr_ready_claim: Claim,
     ):
         """Test document processing with unsupported file format."""
         files = {
@@ -177,7 +191,7 @@ class TestOCRAgentAPI:
         }
         
         response = await async_client.post(
-            f"/api/v1/agents/ocr/process/{sample_claim_in_db.id}",
+            f"/api/v1/agents/ocr/process/{ocr_ready_claim.id}",
             files=files
         )
         

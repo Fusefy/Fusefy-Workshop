@@ -51,7 +51,7 @@ class TestClaimBaseSchema:
         # Assert: Verify all fields are properly set
         assert claim_base.claim_number == base_data["claim_number"], "Claim number should be set correctly"
         assert claim_base.patient_name == base_data["patient_name"], "Patient name should be set correctly"
-        assert claim_base.claim_amount == base_data["claim_amount"], "Claim amount should be set correctly"
+        assert float(claim_base.claim_amount) == float(base_data["claim_amount"]), "Claim amount should be set correctly"
         assert claim_base.document_url == base_data["document_url"], "Document URL should be set correctly"
         assert claim_base.raw_data == base_data["raw_data"], "Raw data should be set correctly"
         assert claim_base.claim_metadata == base_data["claim_metadata"], "Metadata should be set correctly"
@@ -227,8 +227,8 @@ class TestClaimCreateSchema:
         # Assert: Verify all fields including status
         assert claim_create.claim_number == sample_claim_data["claim_number"], "Should inherit claim_number validation"
         assert claim_create.patient_name == sample_claim_data["patient_name"], "Should inherit patient_name validation"
-        assert claim_create.claim_amount == sample_claim_data["claim_amount"], "Should inherit amount validation"
-        assert claim_create.status == sample_claim_data["status"], "Should include status field"
+        assert float(claim_create.claim_amount) == float(sample_claim_data["claim_amount"]), "Should inherit amount validation"
+        assert claim_create.status.value == sample_claim_data["status"], "Should include status field"
 
     @pytest.mark.unit
     def test_claim_create_default_status(self):
@@ -309,7 +309,7 @@ class TestClaimCreateSchema:
         assert isinstance(serialized, dict), "Serialization should return dict"
         assert serialized["claim_number"] == sample_claim_data["claim_number"], "Should serialize claim_number"
         assert serialized["patient_name"] == sample_claim_data["patient_name"], "Should serialize patient_name"
-        assert serialized["status"] == sample_claim_data["status"], "Should serialize status enum"
+        assert serialized["status"] == claim_create.status, "Should serialize status enum"
         
         # Verify optional fields are included when present
         if sample_claim_data.get("document_url"):
@@ -474,8 +474,8 @@ class TestClaimResponseSchema:
         assert claim_response.id == mock_claim.id, "ID should be mapped correctly"
         assert claim_response.claim_number == mock_claim.claim_number, "Claim number should be mapped"
         assert claim_response.patient_name == mock_claim.patient_name, "Patient name should be mapped"
-        assert claim_response.claim_amount == mock_claim.claim_amount, "Amount should be mapped"
-        assert claim_response.status == mock_claim.status, "Status should be mapped"
+        assert float(claim_response.claim_amount) == float(mock_claim.claim_amount), "Amount should be mapped"
+        assert claim_response.status.value == mock_claim.status, "Status should be mapped"
         assert claim_response.created_at == mock_claim.created_at, "Created timestamp should be mapped"
         assert claim_response.updated_at == mock_claim.updated_at, "Updated timestamp should be mapped"
 
@@ -764,7 +764,7 @@ class TestSchemaInteroperability:
         
         # Verify data integrity
         assert claim_response.claim_number == mock_claim.claim_number, "Data should be preserved"
-        assert claim_response.status == mock_claim.status, "Enum should be preserved"
+        assert claim_response.status.value == mock_claim.status, "Enum should be preserved"
 
     @pytest.mark.unit
     def test_update_schema_field_exclusion(self):

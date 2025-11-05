@@ -89,6 +89,24 @@ async def process_document(
                 detail=f"Claim status '{claim.status.value}' is not valid for OCR processing"
             )
         
+        # Validate file format before processing
+        supported_formats = [
+            "application/pdf",
+            "image/png",
+            "image/jpeg", 
+            "image/jpg",
+            "image/tiff",
+            "image/tif"
+        ]
+        
+        if file.content_type not in supported_formats:
+            logger.warning(f"Unsupported file format: {file.content_type}")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Unsupported file format: {file.content_type}. "
+                       f"Supported formats: {', '.join(supported_formats)}"
+            )
+        
         # Log processing start
         logger.info(f"Starting OCR processing for claim {claim_id}, file: {file.filename}")
         

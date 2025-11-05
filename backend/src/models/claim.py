@@ -14,6 +14,7 @@ class ClaimStatus(enum.Enum):
     """Claim processing status enum."""
     
     RECEIVED = "RECEIVED"
+    DOCUMENT_UPLOADED = "DOCUMENT_UPLOADED"
     OCR_PROCESSING = "OCR_PROCESSING"
     PII_MASKED = "PII_MASKED"
     DQ_VALIDATED = "DQ_VALIDATED"
@@ -23,6 +24,7 @@ class ClaimStatus(enum.Enum):
     PAYER_SUBMITTED = "PAYER_SUBMITTED"
     SETTLED = "SETTLED"
     REJECTED = "REJECTED"
+    PROCESSING_ERROR = "PROCESSING_ERROR"
 
 
 class Claim(BaseModel):
@@ -107,7 +109,8 @@ class Claim(BaseModel):
     
     def __repr__(self) -> str:
         """String representation of the claim."""
+        status_value = self.status.value if hasattr(self.status, 'value') else self.status
         return (
             f"<Claim(id={self.id}, claim_number='{self.claim_number}', "
-            f"status='{self.status.value}', amount={self.claim_amount})>"
+            f"status='{status_value}', amount={self.claim_amount})>"
         )

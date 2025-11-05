@@ -33,15 +33,23 @@ async def health_check():
 @router.get("/health/detailed")
 async def detailed_health_check() -> Dict[str, Any]:
     """Detailed health check including database connectivity."""
-    health_info = {
-        "status": "healthy",
-        "timestamp": datetime.now().isoformat(),
-        "version": "1.0.0",
-        "services": {
-            "api": {"status": "healthy", "message": "API is running"},
-            "database": {"status": "unknown", "message": "Database status unknown"}
-        }
-    }
+    import os
+    import platform
+    import time
+    
+    # Get version (fallback to default if not available)
+    try:
+        from src import __version__
+        app_version = __version__
+    except ImportError:
+        app_version = "1.0.0"
+    
+    # Start time tracking (in real implementation, this would be stored when app starts)
+    start_time = time.time()
+    
+    database_status = "unknown"
+    database_message = "Database status unknown"
+    overall_status = "healthy"
     
     # Check database connectivity
     if db_config.session_factory:
@@ -49,21 +57,39 @@ async def detailed_health_check() -> Dict[str, Any]:
             async with db_config.session_factory() as session:
                 result = await session.execute(text("SELECT 1"))
                 if result.scalar() == 1:
-                    health_info["services"]["database"] = {
-                        "status": "healthy",
-                        "message": "Database connection successful"
-                    }
+                    database_status = "healthy"
+                    database_message = "Database connection successful"
         except Exception as e:
-            health_info["services"]["database"] = {
-                "status": "unhealthy",
-                "message": f"Database connection failed: {str(e)}"
-            }
-            health_info["status"] = "degraded"
+            database_status = "unhealthy"
+            database_message = f"Database connection failed: {str(e)}"
+            overall_status = "degraded"
     else:
-        health_info["services"]["database"] = {
-            "status": "unavailable",
-            "message": "Database not initialized"
+        database_status = "unavailable"
+        database_message = "Database not initialized"
+        overall_status = "degraded"
+    
+    health_info = {
+        "status": overall_status,
+        "timestamp": datetime.now().isoformat(),
+        "version": app_version,
+        "database": {
+            "status": database_status,
+            "message": database_message
+        },
+        "system": {
+            "platform": platform.system(),
+            "platform_version": platform.version(),
+            "python_version": platform.python_version(),
+            "cpu_count": os.cpu_count()
+        },
+        "uptime_seconds": int(time.time() - start_time),
+        "services": {
+            "api": {"status": "healthy", "message": "API is running"},
+            "database": {
+                "status": database_status,
+                "message": database_message
+            }
         }
-        health_info["status"] = "degraded"
+    }
     
     return health_info

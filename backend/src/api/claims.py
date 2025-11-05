@@ -79,8 +79,8 @@ async def create_claim(
     description="Retrieve a paginated list of all claims in the system"
 )
 async def list_claims(
-    page: int = Query(1, ge=1, description="Page number"),
-    size: int = Query(10, ge=1, le=100, description="Page size"),
+    page: int = Query(1, description="Page number"),
+    size: int = Query(10, ge=1, description="Page size"),
     db: AsyncSession = Depends(get_db)
 ) -> ClaimListResponse:
     """
@@ -95,6 +95,16 @@ async def list_claims(
         Paginated list of claims
     """
     try:
+        # Handle invalid page numbers gracefully - default to page 1
+        if page < 1:
+            page = 1
+            
+        # Handle invalid size values gracefully - cap at maximum
+        if size > 100:
+            size = 100
+        elif size < 1:
+            size = 1
+            
         # Calculate offset
         offset = (page - 1) * size
         
