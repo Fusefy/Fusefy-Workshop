@@ -20,12 +20,12 @@ class AgentValidator:
         
         base_metrics = {
             "Claims Processing Straight-Through Rate": round(random.uniform(85.0, 95.0), 1),
-            "Error Rate on Approved Claims": round(random.uniform(1.5, 4.2), 1),
-            "Time to Adjudication Reduction": round(random.uniform(45.0, 65.0), 1),
+            "Error Rate on Approved Claims": round(random.uniform(4.5, 8), 1),
+            "Time to Adjudication Reduction": round(random.uniform(41.0, 50.0), 1),
             "Claim Denial Rate": round(random.uniform(8.0, 15.0), 1),
             "Compliance Dashboard Accuracy": round(random.uniform(92.0, 98.5), 1),
             "Integration Accuracy": round(random.uniform(94.0, 99.0), 1),
-            "Processing Latency": round(random.uniform(3, 10), 0)
+            "Processing Latency": round(random.uniform(7, 10), 0)
         }
         
         metrics_with_explanations = {}
