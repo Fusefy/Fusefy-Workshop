@@ -1,0 +1,54 @@
+# FastAPI and Web Framework
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+aiofiles
+
+# Database
+sqlalchemy[asyncio]
+alembic
+asyncpg
+aiosqlite
+psycopg2-binary
+
+# HTTP and CORS
+httpx
+python-multipart
+
+# ADK Framework and AI/ML Dependencies
+google-genai
+litellm
+google-cloud-storage
+google-cloud-documentai
+google-cloud-vision
+pillow
+pdf2image
+
+# Development and Testing Dependencies
+pytest
+pytest-asyncio
+pytest-cov
+pytest-mock
+pytest-xdist
+
+# Test data generation
+faker
+factory-boy
+
+# Async testing utilities
+async-timeout
+asynctest
+
+# Code quality and formatting (optional but recommended)
+black
+isort
+flake8
+mypy
+
+# Documentation generation for tests
+pytest-html
+
+# Mock external services
+responses
+moto

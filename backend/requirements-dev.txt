@@ -1,0 +1,37 @@
+# Development and Testing Dependencies
+
+# Core testing framework
+pytest
+pytest-asyncio
+pytest-cov
+pytest-mock
+pytest-xdist
+
+# HTTP testing
+httpx
+requests-mock
+
+# Test data generation
+faker
+factory-boy
+
+# Async testing utilities
+async-timeout
+asynctest
+
+# Code quality and formatting (optional but recommended)
+black
+isort
+flake8
+mypy
+
+# Documentation generation for tests
+pytest-html
+
+# Database testing utilities
+pytest-postgresql
+alembic
+
+# Mock external services
+responses
+moto
